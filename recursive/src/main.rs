@@ -2,6 +2,7 @@ mod factorial;
 mod fibonacci;
 mod polidrome;
 mod towerofhanoi;
+mod stoa;
 
 use factorial::*;
 

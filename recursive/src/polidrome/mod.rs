@@ -38,3 +38,21 @@ pub fn is_polidrome_recursive(s: &str) -> bool {
 
     is_polidrome_recursive_inner(&s, 0, s.len() - 1)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_polidrome() {
+        let not_polidrome = "This is polidrome?";
+        assert_eq!(is_polidrome(not_polidrome), false);
+    }
+
+    #[test]
+    fn test_is_polidrome_recursive() {
+        let polidrome = "A man, a plan, a canal, Panama!";
+        assert_eq!(is_polidrome_recursive(polidrome), true);
+    }
+
+}
