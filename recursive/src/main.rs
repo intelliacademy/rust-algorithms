@@ -21,6 +21,7 @@ fn main() {
 
     let polidrome = "A man, a plan, a canal, Panama!";
     println!("Is '{}' Is polidrome ? {}", polidrome, polidrome::is_polidrome(polidrome));
+    println!("Is '{}' Is polidrome [recursive] ? {}", polidrome, polidrome::is_polidrome_recursive(polidrome));
 }
 
 
