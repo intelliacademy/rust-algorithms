@@ -1,4 +1,16 @@
 //Sum Triangle of Array solve with recursive function
+/**
+    * Given a triangle of numbers, find the maximum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+    * For example, given the following triangle
+    * [
+    * [1],
+    * [2, 3],
+    * [4, 5, 6],
+    * [7, 8, 9, 10]
+    * ]
+    * The maximum path sum from top to bottom is 20 (1->3->6->10)
+
+*/
 
 
 pub fn sum_triangle(arr: &Vec<Vec<i32>>, i: usize, j: usize) -> i32 {
