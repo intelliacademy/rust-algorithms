@@ -9,6 +9,9 @@ pub struct IntoIter<T: std::cmp::PartialEq + Copy>(List<T>);
 pub struct Iter<'a,T: std::cmp::PartialEq + Copy>{
     next: Option<&'a Node<T>>,
 }
+pub struct IterMut<'a,T: std::cmp::PartialEq + Copy>{
+    next: Option<&'a mut Node<T>>,
+}
 
 impl <T: std::cmp::PartialEq + Copy> List<T> {
     pub fn new() -> Self {
@@ -67,6 +70,10 @@ impl <T: std::cmp::PartialEq + Copy> List<T> {
 
     pub fn iter(&self) -> Iter<T> {
         Iter { next: self.head.as_deref() }
+    }
+
+    pub fn iter_mut(&mut self) -> IterMut<T> {
+        IterMut { next: Option::Some(self.head.as_deref_mut().unwrap()) }
     }
 }
 
