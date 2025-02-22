@@ -6,6 +6,7 @@ pub struct List<T> {
 }
 
 
+
 impl <T> List<T> {
     pub fn new() -> Self {
         List { head: None }
