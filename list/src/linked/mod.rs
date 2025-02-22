@@ -1,12 +1,12 @@
 type Link<T> = Option<Box<Node<T>>>;
 
 
-pub struct List<T> {
+pub struct List<T: std::cmp::PartialEq + Copy> {
     head: Link<T>,
 }
 
-pub struct IntoIter<T>(List<T>);
-pub struct Iter<'a,T>{
+pub struct IntoIter<T: std::cmp::PartialEq + Copy>(List<T>);
+pub struct Iter<'a,T: std::cmp::PartialEq + Copy>{
     next: Option<&'a Node<T>>,
 }
 
@@ -70,7 +70,7 @@ impl <T: std::cmp::PartialEq + Copy> List<T> {
     }
 }
 
-impl <T> Iterator for IntoIter<T> {
+impl <T: std::cmp::PartialEq + Copy> Iterator for IntoIter<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -78,18 +78,18 @@ impl <T> Iterator for IntoIter<T> {
     }
 }
 
-impl <'a, T> Iterator for Iter<'a,T> {
+impl <'a, T: std::cmp::PartialEq + Copy> Iterator for Iter<'a,T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
         self.next.map(|node| {
             self.next = node.next.as_deref();
             &node.data
-        })
+        }).copied()
     }
 }
 
-impl<T> Drop for List<T> {
+impl<T: std::cmp::PartialEq + Copy> Drop for List<T> {
     fn drop(&mut self) {
         let mut current = self.head.take();
         while let Some(mut node) = current {
@@ -109,7 +109,7 @@ struct Node<T> {
 
 #[cfg(test)]
 mod tests {
-    use std::ops::Deref;
+    use std::ops::{Deref, DerefMut};
     use super::*;
 
 
@@ -154,4 +154,27 @@ mod tests {
         assert_eq!(elem, &5);
     }
 
+    #[test]
+    fn test_linked_list_peek_mut(){
+        let arr = vec![1,2,3,4,5];
+        let mut list = List::new();
+        for i in arr.iter() {
+            list.push(i);
+        }
+        let elem = list.peek_mut().unwrap().deref_mut();
+        *elem = &6;
+        assert_eq!(list.peek().unwrap().deref(), &6);
+    }
+
+
+    #[test]
+    fn test_linked_list_into_iter(){
+        let arr = vec![1,2,3,4,5];
+        let mut list = List::new();
+        for i in arr.iter() {
+            list.push(i);
+        }
+        let mut iter = list.into_iter();
+        assert_eq!(iter.next(), Some(&5));
+    }
 }
