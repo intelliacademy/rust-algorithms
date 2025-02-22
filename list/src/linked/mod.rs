@@ -85,6 +85,17 @@ impl <T: std::cmp::PartialEq + Copy> Iterator for IntoIter<T> {
     }
 }
 
+impl <'a, T: std::cmp::PartialEq + Copy> Iterator for IterMut<'a,T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.next.take().map(|node| {
+            self.next = node.next.as_deref_mut();
+            node.data
+        })
+    }
+}
+
 impl <'a, T: std::cmp::PartialEq + Copy> Iterator for Iter<'a,T> {
     type Item = T;
 
