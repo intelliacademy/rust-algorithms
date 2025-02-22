@@ -10,22 +10,19 @@ impl <T> List<T> {
         List { head: None }
     }
 
-    pub fn push<T>(self,elem: T) -> List<T> {
+    pub fn push(&mut self,elem: T){
         let new_node = Box::new(Node {
             data: elem,
-            next: self.head,
+            next: self.head.take(),
         });
-
-        List { head: Some(new_node) }
+        self.head = Some(new_node);
     }
 
-    pub fn pop<T>(self) -> (Option<T>, List<T>) {
-        match self.head {
-            None => (None, self),
-            Some(node) => {
-                (Some(node.data), List { head: node.next })
-            }
-        }
+    pub fn pop(&mut self) -> Option<T> {
+        self.head.take().map(|node| {
+            self.head = node.next;
+            node.data
+        })
     }
 }
 
@@ -34,4 +31,23 @@ impl <T> List<T> {
 struct Node<T> {
     data: T,
     next: Link<T>,
+}
+
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+
+    #[test]
+    fn test_linked_list_push_and_pop(){
+        let arr = vec![1,2,3,4,5];
+        let mut list = List::new();
+        for i in arr.iter() {
+            list.push(i);
+        }
+        assert_eq!(list.pop(), Some(&5));
+    }
+
 }
