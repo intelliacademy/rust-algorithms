@@ -98,6 +98,22 @@ where
             Some(node) => node.max()
         }
     }
+
+
+
+    pub fn ceil(&self, value: &T) -> Option<&T>
+    where
+        T: Ord
+    {
+        None
+    }
+
+    pub fn floor(&self, value: &T) -> Option<&T>
+    where
+        T: Ord
+    {
+        None
+    }
 }
 
 #[cfg(test)]
@@ -131,14 +147,14 @@ mod tests {
     #[test]
     fn test_min(){
         let mut sbst = new_bst();
-        let minimum_value = sbst.min().unwrap().clone();
+        let minimum_value = *sbst.min().unwrap();
         assert_eq!(minimum_value,1)
     }
 
     #[test]
     fn test_max(){
         let mut sbst = new_bst();
-        let max_value = sbst.max().unwrap().clone();
+        let max_value = *sbst.max().unwrap();
         assert_eq!(max_value,8)
     }
 }
