@@ -77,6 +77,27 @@ where
             None => false,
         }
     }
+
+
+    pub fn min(&self) -> Option<&T>
+    where
+        T: Ord
+    {
+        match &self.left {
+            None => self.value.as_ref(),
+            Some(node) => node.min()
+        }
+    }
+
+    pub fn max(&self) -> Option<&T>
+    where
+        T: Ord
+    {
+        match &self.right {
+            None => self.value.as_ref(),
+            Some(node) => node.max()
+        }
+    }
 }
 
 #[cfg(test)]
@@ -105,5 +126,19 @@ mod tests {
         let mut sbst = new_bst();
         let has_five = sbst.search(5);
         assert_eq!(has_five,false)
+    }
+
+    #[test]
+    fn test_min(){
+        let mut sbst = new_bst();
+        let minimum_value = sbst.min().unwrap().clone();
+        assert_eq!(minimum_value,1)
+    }
+
+    #[test]
+    fn test_max(){
+        let mut sbst = new_bst();
+        let max_value = sbst.max().unwrap().clone();
+        assert_eq!(max_value,8)
     }
 }
