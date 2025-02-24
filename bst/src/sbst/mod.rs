@@ -1,5 +1,7 @@
 // Simple inbalanced BST
 
+use std::cmp::Ordering;
+
 #[derive(Debug)]
 pub struct SBST<T>
 where
@@ -44,7 +46,7 @@ where
                         &mut self.right
                     };
                     match target_node {
-                        Some( node) => node.insert(value),
+                        Some(node) => node.insert(value),
                         None => {
                             let mut node = SBST::default();
                             node.insert(value);
@@ -55,19 +57,53 @@ where
             }
         }
     }
+
+    pub fn search(&self, value: T) -> bool
+    where
+        T: Ord,
+    {
+        match &self.value {
+            Some(key) => match key.cmp(&value) {
+                Ordering::Equal => true,
+                Ordering::Greater => match &self.left {
+                    None => false,
+                    Some(node) => node.search(value),
+                },
+                Ordering::Less => match &self.right {
+                    None => false,
+                    Some(node) => node.search(value),
+                },
+            },
+            None => false,
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    #[test]
-    fn test_bst() {
+    fn new_bst() -> SBST<i32>
+    {
         let mut sbst = SBST::default();
-        let arr = [4,6,7,1,8,2];
+        let arr = [4, 6, 7, 1, 8, 2];
         for i in 0..arr.len() {
             sbst.insert(arr[i])
         }
+        sbst
+    }
+
+
+    #[test]
+    fn test_bst() {
+        let mut sbst = new_bst();
         println!("{:?}", sbst)
+    }
+
+    #[test]
+    fn test_search() {
+        let mut sbst = new_bst();
+        let has_five = sbst.search(5);
+        assert_eq!(has_five,false)
     }
 }
