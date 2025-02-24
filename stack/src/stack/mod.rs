@@ -4,7 +4,7 @@ pub struct Queue<T> {
     list: LinkedList<T>,
 }
 
-impl <T> Queue<T> {
+impl<T> Queue<T> {
     pub fn new() -> Self {
         Queue {
             list: LinkedList::new(),
@@ -32,11 +32,9 @@ impl <T> Queue<T> {
     }
 }
 
-
 #[cfg(test)]
 mod test {
     use super::*;
-
 
     #[test]
     fn test_queue_push() {
@@ -48,14 +46,13 @@ mod test {
     }
 
     #[test]
-    fn test_queue_peek(){
+    fn test_queue_peek() {
         let mut queue = Queue::new();
         queue.enqueue(1);
         queue.enqueue(2);
         queue.enqueue(3);
         assert_eq!(*queue.peek().unwrap(), 1);
     }
-
 
     #[test]
     fn test_enqueue_dequeue() {
@@ -68,7 +65,6 @@ mod test {
         assert_eq!(queue.dequeue().unwrap(), 3);
         assert_eq!(queue.len(), 0);
     }
-
 
     #[test]
     fn test_is_empty() {

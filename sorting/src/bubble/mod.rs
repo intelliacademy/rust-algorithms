@@ -1,5 +1,6 @@
-pub fn sort_by_bubble<T>(arr: &mut Vec<T>)-> &Vec<T>
-where T: Ord
+pub fn sort_by_bubble<T>(arr: &mut Vec<T>) -> &Vec<T>
+where
+    T: Ord,
 {
     for i in 0..arr.len() {
         for j in 0..arr.len() - i - 1 {

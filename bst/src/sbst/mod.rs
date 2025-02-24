@@ -1,68 +1,61 @@
-
 // Simple inbalanced BST
 
-pub type Link<T> = Option<Box<Node<T>>>;
-
-pub struct Node<T: Ord + Copy> {
-    value: T,
-    left: Link<T>,
-    right: Link<T>,
+#[derive(Debug)]
+pub struct SBST<T>
+where
+    T: Ord,
+{
+    value: Option<T>,
+    left: Option<Box<SBST<T>>>,
+    right: Option<Box<SBST<T>>>,
 }
 
-pub struct BST<T: Ord + Copy> {
-    root: Link<T>,
+impl<T> Default for SBST<T>
+where
+    T: Ord,
+{
+    fn default() -> Self {
+        SBST::new()
+    }
 }
 
-impl <T: Ord + Copy> BST<T> {
+impl<T> SBST<T>
+where
+    T: Ord,
+{
     pub fn new() -> Self {
-        BST { root: None }
+        SBST {
+            value: None,
+            left: None,
+            right: None,
+        }
     }
 
     pub fn insert(&mut self, value: T) {
-        self.root = self.insert_node(self.root.take(), value);
-    }
-
-    fn insert_node(&mut self, node: Link<T>, value: T) -> Link<T> {
-        match node {
-            None => Some(Box::new(Node {
-                value,
-                left: None,
-                right: None,
-            })),
-            Some(mut node) => {
-                if value <= node.value {
-                    node.left = self.insert_node(node.left.take(), value);
-                } else {
-                    node.right = self.insert_node(node.right.take(), value);
-                }
-                Some(node)
-            }
-        }
-    }
-
-    pub fn search(&self, value: T) -> bool {
-        let mut node = &self.root;
-        self.search_node(node, value)
-    }
-
-    fn search_node(&self, mut node: &Link<T>, value: T) -> bool {
-        match node {
-            None => false,
-            Some(node) => {
-                if value == node.value {
-                    true
-                } else if value < node.value {
-                    self.search_node(&node.left, value)
-                } else {
-                    self.search_node(&node.right, value)
+        if self.value.is_none() {
+            self.value = Some(value)
+        } else {
+            match &self.value {
+                None => (),
+                Some(key) => {
+                    let target_node = if value < *key {
+                        &mut self.left
+                    } else {
+                        &mut self.right
+                    };
+                    match target_node {
+                        Some( node) => node.insert(value),
+                        None => {
+                            let mut node = SBST::default();
+                            node.insert(value);
+                            *target_node = Some(Box::new(node))
+                        }
+                    }
                 }
             }
         }
     }
-
 }
-
-
 
 #[cfg(test)]
 mod tests {
@@ -70,14 +63,11 @@ mod tests {
 
     #[test]
     fn test_bst() {
-        let mut bst = BST::new();
-        bst.insert(5);
-        bst.insert(3);
-        bst.insert(7);
-        bst.insert(2);
-        bst.insert(4);
-        bst.insert(6);
-
-        assert_eq!(bst.search(5), true);
+        let mut sbst = SBST::default();
+        let arr = [4,6,7,1,8,2];
+        for i in 0..arr.len() {
+            sbst.insert(arr[i])
+        }
+        println!("{:?}", sbst)
     }
 }

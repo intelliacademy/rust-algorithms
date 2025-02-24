@@ -1,10 +1,10 @@
-
 pub fn sort_by_merge<T>(arr: &mut Vec<T>) -> Vec<T>
-    where T: Ord + Clone
+where
+    T: Ord + Clone,
 {
     if arr.len() <= 1 {
         return arr.to_vec();
-    }else {
+    } else {
         let mid = arr.len() / 2;
         let mut left = arr[0..mid].to_vec();
         let mut right = arr[mid..].to_vec();
@@ -43,7 +43,10 @@ mod tests {
     fn test_merge_sort() {
         let mut arr = vec![64, 25, 12, 22, 11];
         let sorted_arr = sort_by_merge(&mut arr);
-        assert_eq!(sorted_arr.to_vec(), [11, 12, 22, 25, 64], "Failed to sort by merge");
+        assert_eq!(
+            sorted_arr.to_vec(),
+            [11, 12, 22, 25, 64],
+            "Failed to sort by merge"
+        );
     }
-
 }

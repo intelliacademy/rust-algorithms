@@ -1,8 +1,8 @@
 mod factorial;
 mod fibonacci;
 mod polidrome;
-mod towerofhanoi;
 mod stoa;
+mod towerofhanoi;
 
 use factorial::*;
 
@@ -15,17 +15,26 @@ fn main() {
     let n = 10;
     println!("Fibonacci for {} is {}", n, fibonacci::fbc_compute(n));
 
-
     let not_polidrome = "This is polidrome?";
 
-    println!("Is '{}' Is polidrome ? {}", not_polidrome, polidrome::is_polidrome(not_polidrome));
+    println!(
+        "Is '{}' Is polidrome ? {}",
+        not_polidrome,
+        polidrome::is_polidrome(not_polidrome)
+    );
 
     let polidrome = "A man, a plan, a canal, Panama!";
-    println!("Is '{}' Is polidrome ? {}", polidrome, polidrome::is_polidrome(polidrome));
-    println!("Is '{}' Is polidrome [recursive] ? {}", polidrome, polidrome::is_polidrome_recursive(polidrome));
+    println!(
+        "Is '{}' Is polidrome ? {}",
+        polidrome,
+        polidrome::is_polidrome(polidrome)
+    );
+    println!(
+        "Is '{}' Is polidrome [recursive] ? {}",
+        polidrome,
+        polidrome::is_polidrome_recursive(polidrome)
+    );
 
     println!("Tower of Hanoi for 3 disks");
     towerofhanoi::tower_of_hanoi(5);
 }
-
-

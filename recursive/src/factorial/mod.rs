@@ -11,13 +11,8 @@ pub fn fact_tail(n: u64) -> u64 {
 
 //head recursive
 pub fn fact_head(n: u64) -> u64 {
-    if n == 0 {
-        1
-    } else {
-        n * fact_head(n - 1)
-    }
+    if n == 0 { 1 } else { n * fact_head(n - 1) }
 }
-
 
 #[cfg(test)]
 mod tests {

@@ -1,4 +1,3 @@
-
 /**
     [Selection Sort](https://en.wikipedia.org/wiki/Selection_sort)
     is an in-place comparison sorting algorithm that divides the input list into two parts:
@@ -12,13 +11,13 @@
     ```
 */
 
-
 pub fn sort_by_selection<T>(arr: &mut Vec<T>) -> &Vec<T>
-    where T: Ord
+where
+    T: Ord,
 {
-    for i in 0..arr.len()-1 {
+    for i in 0..arr.len() - 1 {
         let mut smallest = i;
-        for j in i+1..arr.len() {
+        for j in i + 1..arr.len() {
             if arr[j] < arr[smallest] {
                 smallest = j;
             }

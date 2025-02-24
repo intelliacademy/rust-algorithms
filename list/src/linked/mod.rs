@@ -1,24 +1,23 @@
 type Link<T> = Option<Box<Node<T>>>;
 
-
 pub struct List<T: std::cmp::PartialEq + Copy> {
     head: Link<T>,
 }
 
 pub struct IntoIter<T: std::cmp::PartialEq + Copy>(List<T>);
-pub struct Iter<'a,T: std::cmp::PartialEq + Copy>{
+pub struct Iter<'a, T: std::cmp::PartialEq + Copy> {
     next: Option<&'a Node<T>>,
 }
-pub struct IterMut<'a,T: std::cmp::PartialEq + Copy>{
+pub struct IterMut<'a, T: std::cmp::PartialEq + Copy> {
     next: Option<&'a mut Node<T>>,
 }
 
-impl <T: std::cmp::PartialEq + Copy> List<T> {
+impl<T: std::cmp::PartialEq + Copy> List<T> {
     pub fn new() -> Self {
         List { head: None }
     }
 
-    pub fn push(&mut self,elem: T){
+    pub fn push(&mut self, elem: T) {
         let new_node = Box::new(Node {
             data: elem,
             next: self.head.take(),
@@ -69,15 +68,19 @@ impl <T: std::cmp::PartialEq + Copy> List<T> {
     }
 
     pub fn iter(&self) -> Iter<T> {
-        Iter { next: self.head.as_deref() }
+        Iter {
+            next: self.head.as_deref(),
+        }
     }
 
     pub fn iter_mut(&mut self) -> IterMut<T> {
-        IterMut { next: Option::Some(self.head.as_deref_mut().unwrap()) }
+        IterMut {
+            next: Option::Some(self.head.as_deref_mut().unwrap()),
+        }
     }
 }
 
-impl <T: std::cmp::PartialEq + Copy> Iterator for IntoIter<T> {
+impl<T: std::cmp::PartialEq + Copy> Iterator for IntoIter<T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -85,7 +88,7 @@ impl <T: std::cmp::PartialEq + Copy> Iterator for IntoIter<T> {
     }
 }
 
-impl <'a, T: std::cmp::PartialEq + Copy> Iterator for IterMut<'a,T> {
+impl<'a, T: std::cmp::PartialEq + Copy> Iterator for IterMut<'a, T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -96,14 +99,16 @@ impl <'a, T: std::cmp::PartialEq + Copy> Iterator for IterMut<'a,T> {
     }
 }
 
-impl <'a, T: std::cmp::PartialEq + Copy> Iterator for Iter<'a,T> {
+impl<'a, T: std::cmp::PartialEq + Copy> Iterator for Iter<'a, T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        self.next.map(|node| {
-            self.next = node.next.as_deref();
-            &node.data
-        }).copied()
+        self.next
+            .map(|node| {
+                self.next = node.next.as_deref();
+                &node.data
+            })
+            .copied()
     }
 }
 
@@ -116,24 +121,20 @@ impl<T: std::cmp::PartialEq + Copy> Drop for List<T> {
     }
 }
 
-
 #[derive(Debug)]
 struct Node<T> {
     data: T,
     next: Link<T>,
 }
 
-
-
 #[cfg(test)]
 mod tests {
-    use std::ops::{Deref, DerefMut};
     use super::*;
-
+    use std::ops::{Deref, DerefMut};
 
     #[test]
-    fn test_linked_list_push_and_pop(){
-        let arr = vec![1,2,3,4,5];
+    fn test_linked_list_push_and_pop() {
+        let arr = vec![1, 2, 3, 4, 5];
         let mut list = List::new();
         for i in arr.iter() {
             list.push(i);
@@ -142,8 +143,8 @@ mod tests {
     }
 
     #[test]
-    fn test_linked_list_remove_contains_element(){
-        let arr = vec![1,2,3,4,5];
+    fn test_linked_list_remove_contains_element() {
+        let arr = vec![1, 2, 3, 4, 5];
         let mut list = List::new();
         for i in arr.iter() {
             list.push(i);
@@ -152,8 +153,8 @@ mod tests {
     }
 
     #[test]
-    fn test_linked_list_remove_does_not_contain_element(){
-        let arr = vec![1,2,3,4,5];
+    fn test_linked_list_remove_does_not_contain_element() {
+        let arr = vec![1, 2, 3, 4, 5];
         let mut list = List::new();
         for i in arr.iter() {
             list.push(i);
@@ -162,8 +163,8 @@ mod tests {
     }
 
     #[test]
-    fn test_linked_list_peek(){
-        let arr = vec![1,2,3,4,5];
+    fn test_linked_list_peek() {
+        let arr = vec![1, 2, 3, 4, 5];
         let mut list = List::new();
         for i in arr.iter() {
             list.push(i);
@@ -173,8 +174,8 @@ mod tests {
     }
 
     #[test]
-    fn test_linked_list_peek_mut(){
-        let arr = vec![1,2,3,4,5];
+    fn test_linked_list_peek_mut() {
+        let arr = vec![1, 2, 3, 4, 5];
         let mut list = List::new();
         for i in arr.iter() {
             list.push(i);
@@ -184,10 +185,9 @@ mod tests {
         assert_eq!(list.peek().unwrap().deref(), &6);
     }
 
-
     #[test]
-    fn test_linked_list_into_iter(){
-        let arr = vec![1,2,3,4,5];
+    fn test_linked_list_into_iter() {
+        let arr = vec![1, 2, 3, 4, 5];
         let mut list = List::new();
         for i in arr.iter() {
             list.push(i);

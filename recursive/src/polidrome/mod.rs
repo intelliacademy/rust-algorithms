@@ -1,5 +1,3 @@
-
-
 pub fn is_polidrome(s: &str) -> bool {
     let s = s
         .to_lowercase()
@@ -10,14 +8,13 @@ pub fn is_polidrome(s: &str) -> bool {
     let mut j = s.len() - 1;
     while i < j {
         if s[i] != s[j] {
-            return false
+            return false;
         }
         i += 1;
         j -= 1;
     }
     true
 }
-
 
 pub fn is_polidrome_recursive(s: &str) -> bool {
     let s = s
@@ -28,10 +25,10 @@ pub fn is_polidrome_recursive(s: &str) -> bool {
 
     fn is_polidrome_recursive_inner(s: &Vec<char>, i: usize, j: usize) -> bool {
         if i >= j {
-            return true
+            return true;
         }
         if s[i] != s[j] {
-            return false
+            return false;
         }
         is_polidrome_recursive_inner(s, i + 1, j - 1)
     }
@@ -54,5 +51,4 @@ mod tests {
         let polidrome = "A man, a plan, a canal, Panama!";
         assert_eq!(is_polidrome_recursive(polidrome), true);
     }
-
 }

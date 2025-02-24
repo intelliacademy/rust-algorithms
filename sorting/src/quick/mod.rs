@@ -1,7 +1,6 @@
-
-
 pub fn sort_by_quick<T>(arr: &mut Vec<T>) -> &Vec<T>
-where T: Ord + Clone
+where
+    T: Ord + Clone,
 {
     fn quick_sort<T: Ord + std::clone::Clone>(arr: &mut [T]) {
         if arr.len() <= 1 {
@@ -15,7 +14,8 @@ where T: Ord + Clone
 }
 
 fn partition<T>(arr: &mut Vec<T>) -> usize
-where T: Ord
+where
+    T: Ord,
 {
     let pivot = arr.len() - 1;
     let mut i = 0;
@@ -28,7 +28,6 @@ where T: Ord
     arr.swap(i, pivot);
     i
 }
-
 
 #[cfg(test)]
 mod tests {
