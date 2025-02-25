@@ -19,6 +19,8 @@ mod tests {
 
     #[test]
     fn test_fib(){
-
+        let value = 10;
+        let result = fib(value);
+        assert_eq!(result,55)
     }
 }
