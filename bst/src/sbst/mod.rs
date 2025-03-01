@@ -78,39 +78,36 @@ where
         }
     }
 
-
     pub fn min(&self) -> Option<&T>
     where
-        T: Ord
+        T: Ord,
     {
         match &self.left {
             None => self.value.as_ref(),
-            Some(node) => node.min()
+            Some(node) => node.min(),
         }
     }
 
     pub fn max(&self) -> Option<&T>
     where
-        T: Ord
+        T: Ord,
     {
         match &self.right {
             None => self.value.as_ref(),
-            Some(node) => node.max()
+            Some(node) => node.max(),
         }
     }
 
-
-
     pub fn ceil(&self, value: &T) -> Option<&T>
     where
-        T: Ord
+        T: Ord,
     {
         None
     }
 
     pub fn floor(&self, value: &T) -> Option<&T>
     where
-        T: Ord
+        T: Ord,
     {
         None
     }
@@ -120,8 +117,7 @@ where
 mod tests {
     use super::*;
 
-    fn new_bst() -> SBST<i32>
-    {
+    fn new_bst() -> SBST<i32> {
         let mut sbst = SBST::default();
         let arr = [4, 6, 7, 1, 8, 2];
         for i in 0..arr.len() {
@@ -129,7 +125,6 @@ mod tests {
         }
         sbst
     }
-
 
     #[test]
     fn test_bst() {
@@ -141,20 +136,20 @@ mod tests {
     fn test_search() {
         let mut sbst = new_bst();
         let has_five = sbst.search(5);
-        assert_eq!(has_five,false)
+        assert_eq!(has_five, false)
     }
 
     #[test]
-    fn test_min(){
+    fn test_min() {
         let mut sbst = new_bst();
         let minimum_value = *sbst.min().unwrap();
-        assert_eq!(minimum_value,1)
+        assert_eq!(minimum_value, 1)
     }
 
     #[test]
-    fn test_max(){
+    fn test_max() {
         let mut sbst = new_bst();
         let max_value = *sbst.max().unwrap();
-        assert_eq!(max_value,8)
+        assert_eq!(max_value, 8)
     }
 }
