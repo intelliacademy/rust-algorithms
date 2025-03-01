@@ -1,4 +1,4 @@
 [workspace]
 resolver = "2"
-members = [ "bst", "dynamic-programming", "graphs", "list", "mst","recursive", "sorting", "stack"]
+members = [ "bst", "dynamic-programming", "graphs", "intro", "list", "mst","recursive", "sorting", "stack"]
 default-run = "sorting"
